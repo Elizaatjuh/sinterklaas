@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sinterklaas Puzzle Game</title>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+    body {
+        margin: 0;
+        font-family: 'Patrick Hand', cursive;
+        background: #fef6e4;
+        color: #5c3d2e;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    header {
+        background: #d63447;
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+        color: #fff;
+        font-size: 2em;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #fff3e0;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+        text-align: center;
+    }
+
+    .question {
+        font-size: 1.5em;
+        margin-bottom: 20px;
+    }
+
+    .choices {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .choice-btn {
+        padding: 12px 20px;
+        font-size: 1em;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        background: #d63447;
+        color: white;
+        transition: 0.3s;
+    }
+
+    .choice-btn:hover {
+        background: #a02b37;
+    }
+
+    .final {
+        font-size: 1.8em;
+        margin-top: 20px;
+        color: #2e7d32;
+        font-weight: bold;
+    }
+
+</style>
+</head>
+<body>
+
+<header>Sinterklaas Puzzle Game</header>
+
+<div class="container">
+    <div class="question-container">
+        <div class="question" id="question">Welcome! Click Start to begin your Sinterklaas adventure.</div>
+        <div class="choices" id="choices"></div>
+        <button id="startBtn">Start</button>
+    </div>
+
+    <div class="final" id="final" style="display:none;">
+        🎁 Congratulations! The final puzzle is at the big oak tree in the garden! 🎁
+    </div>
+</div>
+
+<script>
+    const questions = [
+        {
+            q: "Riddle 1: I have four legs and a back but no head. What am I?",
+            options: ["Table", "Chair", "Dog", "Shoe"],
+            correct: "Chair"
+        },
+        {
+            q: "Riddle 2: I am round, red, and often put in shoes for Sinterklaas. What am I?",
+            options: ["Apple", "Ball", "Candle", "Orange"],
+            correct: "Apple"
+        },
+        {
+            q: "Riddle 3: I fly in the sky and deliver gifts. Who am I?",
+            options: ["Santa", "Elf", "Sinterklaas", "Reindeer"],
+            correct: "Sinterklaas"
+        },
+        {
+            q: "Riddle 4: I’m sweet and shaped like a letter. What am I?",
+            options: ["Cookie", "Letter", "Candy Cane", "Chocolate Bar"],
+            correct: "Letter"
+        },
+        {
+            q: "Riddle 5: I’m filled with surprises, sometimes toys or candy. What am I?",
+            options: ["Box", "Gift", "Bag", "Basket"],
+            correct: "Gift"
+        }
+    ];
+
+    let current = 0;
+    const questionEl = document.getElementById("question");
+    const choicesEl = document.getElementById("choices");
+    const startBtn = document.getElementById("startBtn");
+    const finalEl = document.getElementById("final");
+
+    startBtn.addEventListener("click", () => {
+        startBtn.style.display = "none";
+        showQuestion();
+    });
+
+    function showQuestion() {
+        const currentQ = questions[current];
+        questionEl.textContent = currentQ.q;
+        choicesEl.innerHTML = "";
+
+        currentQ.options.forEach(option => {
+            const btn = document.createElement("button");
+            btn.className = "choice-btn";
+            btn.textContent = option;
+            btn.addEventListener("click", () => checkAnswer(option));
+            choicesEl.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selected) {
+        if(selected === questions[current].correct) {
+            current++;
+            if(current < questions.length) {
+                showQuestion();
+            } else {
+                showFinal();
+            }
+        } else {
+            alert("Oops! Try again.");
+        }
+    }
+
+    function showFinal() {
+        document.querySelector(".question-container").style.display = "none";
+        finalEl.style.display = "block";
+    }
+</script>
+
+</body>
+</html>
