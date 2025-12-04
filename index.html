@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sinterklaas Puzzle Game</title>
+<title>SinTESTklaas</title>
 <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
 <style>
     body {
@@ -35,6 +35,16 @@
         border-radius: 20px;
         box-shadow: 0 6px 12px rgba(0,0,0,0.2);
         text-align: center;
+        position: relative;
+    }
+
+    #question-img {
+        max-width: 80%;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        display: none;
+        border: 3px solid #d63447;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     .question {
@@ -63,6 +73,14 @@
         background: #a02b37;
     }
 
+    .choice-btn-left {
+    text-align: left;
+    white-space: normal; /* laat tekst afbreken */
+    line-height: 1.4;
+    padding-left: 20px;
+    }
+
+
     .final {
         font-size: 1.8em;
         margin-top: 20px;
@@ -70,51 +88,95 @@
         font-weight: bold;
     }
 
+    input[type="text"] {
+        padding: 10px;
+        font-size: 1em;
+        border-radius: 10px;
+        border: 2px solid #d63447;
+        margin-bottom: 15px;
+        width: 80%;
+    }
+
 </style>
 </head>
 <body>
 
-<header>Sinterklaas Puzzle Game</header>
+<header>SinTESTklaas</header>
 
 <div class="container">
     <div class="question-container">
-        <div class="question" id="question">Welcome! Click Start to begin your Sinterklaas adventure.</div>
+        <!-- Question Image -->
+        <img id="question-img" src="" alt="Question Image">
+
+        <!-- Question Text -->
+        <div class="question" id="question">Goed gedaan Erik, de eerste horde is genomen, <br>je bent aan het begin van de test aangekomen. <br> Druk op start voor de eerste vraag, <br> je wil dat cadeau toch graag?</div>
+
+        <!-- Multiple Choice Buttons -->
         <div class="choices" id="choices"></div>
+
+        <!-- Start Button -->
         <button id="startBtn">Start</button>
     </div>
 
+    <!-- Final Puzzle -->
     <div class="final" id="final" style="display:none;">
-        🎁 Congratulations! The final puzzle is at the big oak tree in the garden! 🎁
+        🎁 Lieve Erik, 🎁<br>
+        Je hebt bijna bewezen dat jij de echte Erik bent,
+        Nu volgt de laatste test voor deze vent
+        Je vindt de locatie van je cadeau tussen je onderdelenboeken
+        Met deze foto weet je vast wel waar je moet zoeken
+        <img id="sint&piet_schrikken.png" src="sint&piet_schrikken.png" alt="Question Image">
     </div>
+
 </div>
 
 <script>
     const questions = [
         {
-            q: "Riddle 1: I have four legs and a back but no head. What am I?",
-            options: ["Table", "Chair", "Dog", "Shoe"],
-            correct: "Chair"
+            type: "text",
+            q: "De eerste vraag gaat over Eriks lievelingsbezigheid. <br>Tikkend op motorforum besteedt hij al zijn tijd. <br>Zijn eerste bericht staat hierboven zwart op wit. <br>Maar in welk jaar werd Erik hier lid?",
+            correct: "2009",
+            image: "eerste_bericht.png"
         },
         {
-            q: "Riddle 2: I am round, red, and often put in shoes for Sinterklaas. What am I?",
-            options: ["Apple", "Ball", "Candle", "Orange"],
-            correct: "Apple"
+            type: "mc",
+            q: "2: Erik had al veel connecties vóór zijn komst op de website.<br>Zijn eerste bericht had dus meteen tot interactie geleid.<br>Hieronder lees je hoe hij werd welkom geheten<br>\nMaar welk van de berichten heeft Sint erbij gesmeten?",
+            options: ["Als dit de Erik is die ik denk, dan is hij bij die club al zeer bekend. En die foto's moet hij dan zeker plaatsen, daar gaan de liefhebbers spontaan van kwijlen.", 
+                "Hoi Erik<br><br><br>Cor", 
+                "Hoi Erik.<br><br>Albert.", 
+                "Ha ERik ik ontvang de fotoos ook graag"],
+            correct: "Ha ERik ik ontvang de fotoos ook graag",
+            image:"eerste_bericht.png"
         },
         {
-            q: "Riddle 3: I fly in the sky and deliver gifts. Who am I?",
-            options: ["Santa", "Elf", "Sinterklaas", "Reindeer"],
-            correct: "Sinterklaas"
+            type: "image",
+            q: "3: In juni waren we met zijn allen terug in het Erasmus MC<br>Dokter Wijfels had zijn gereedschapskist mee<br>Ellis' elleboog werd vastgezet met schroef dertien<br>Maar op welke foto is zij te zien??",
+            options: [ 
+                { src: "ellis_elleboog.jpg", alt: "Optie1" },
+                { src: "niet-ellis_elleboog.jpg", alt: "Optie2" }],
+            correct: "Optie1",
         },
         {
-            q: "Riddle 4: I’m sweet and shaped like a letter. What am I?",
-            options: ["Cookie", "Letter", "Candy Cane", "Chocolate Bar"],
-            correct: "Letter"
+            type: "text",
+            q: "4: Voor retourtjes Rotterdam heb je een auto nodig waar je op kunt bouwen<br>Gelukkig heeft Erik al 16 jaar de mitsubishi om op te vertrouwen<br>Een grote snelle auto is werkelijk een geschenk<br>Maar hoeveel liter past er eigenlijk in de (40liter) tank?",
+            correct: "ANY"
         },
         {
-            q: "Riddle 5: I’m filled with surprises, sometimes toys or candy. What am I?",
-            options: ["Box", "Gift", "Bag", "Basket"],
-            correct: "Gift"
+            type: "text",
+            q: "5: Erik was onderweg naar Italië met de heren<br>Tot de FJR heimwee kreeg en besloot zich om te keren<br>Hij parkeerde zichzelf omgekeerd in de sloot <br>En kon meteen door naar de schroot<br><br>Erik kent de beste remedie tegen een gebroken hart<br>Dat is namelijk een nieuwe start<br>Een prachtig blauw monster waar je heerlijk snel op gaat<br>Maar wat staat er precies op de kentekenplaat?",
+            correct: "96-MR-TH"
+        },
+        {   type: "mc",
+            q: "6: Familie Hobo heeft een mooi jaar achter de rug, Heb je wel opgelet bij de Downton Abbey film? Wie nam de keuken overvan Mrs. Patmore?",
+            options: 
+            ["Daisy", 
+                "Mrs Crawley", 
+                "V", 
+                "A"],
+            correct: "Daisy",
+
         }
+
     ];
 
     let current = 0;
@@ -122,36 +184,174 @@
     const choicesEl = document.getElementById("choices");
     const startBtn = document.getElementById("startBtn");
     const finalEl = document.getElementById("final");
+    const imgEl = document.getElementById("question-img");
 
+    // startBtn.addEventListener("click", () => {
+    //     startBtn.style.display = "none";
+    //     showQuestion();
+    // });
     startBtn.addEventListener("click", () => {
-        startBtn.style.display = "none";
-        showQuestion();
+    startBtn.style.display = "none";
+    showScaryPopupStart();
+});
+
+function showScaryPopupStart() {
+    // Create overlay
+    const overlay = document.createElement("div");
+    overlay.style.position = "fixed";
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.background = "rgba(0,0,0,0.95)";
+    overlay.style.display = "flex";
+    overlay.style.flexDirection = "column";
+    overlay.style.justifyContent = "center";
+    overlay.style.alignItems = "center";
+    overlay.style.zIndex = 9999;
+    overlay.style.textAlign = "center";
+
+    overlay.innerHTML = `
+        <img src="sint&piet_schrikken.png" alt="Scary Cookie" style="max-width:40%;border:5px solid red;border-radius:20px;">
+        <h1 style="color:red;font-size:2.5em;margin-top:20px;">Boe! 🍪👻</h1>
+        <p style="color:white;font-size:1.2em;max-width:300px;">
+        Wil je starten met de eerste vraag? <br>
+        Accepteer dan de cookies graag,<br>
+        Door op "ja" te drukken<br>
+        Ga je akkoord met de privacystukken<br>
+        Er worden cookies in de cache van je browser gedouwt <br>
+        Waarmee Big Tech je in de gaten houdt
+        </p>
+        <div style="margin-top:20px;">
+            <button id="acceptCookie" style="padding:10px 20px;margin:0 10px;font-size:1em;border-radius:10px;background:#2e7d32;color:white;border:none;cursor:pointer;">Ja</button>
+            <button id="rejectCookie" style="padding:10px 20px;margin:0 10px;font-size:1em;border-radius:10px;background:#d63447;color:white;border:none;cursor:pointer;">Nee</button>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    document.getElementById("acceptCookie").addEventListener("click", () => {
+        alert("Oh nee! De echte Erik was hier niet mee akkoord gegaan.\nDe snelle test is nu van de baan.\nJe wordt aan een uitgebreide test onderheven\nZorg dat je nu wel de juiste antwoorden gaat geven");
+        document.body.removeChild(overlay);
+        showQuestion(); // start de eerste echte vraag
     });
+
+    document.getElementById("rejectCookie").addEventListener("click", () => {
+        alert("Dat is inderdaad het antwoord dat Erik ook geeft!\nJe hebt de eerste vraag overleefd");
+        document.body.removeChild(overlay);
+        showQuestion(); // start de eerste echte vraag
+    });
+}
+
 
     function showQuestion() {
         const currentQ = questions[current];
-        questionEl.textContent = currentQ.q;
+        questionEl.innerHTML = currentQ.q
+        // Show image if exists
+        if(currentQ.image) {
+            imgEl.src = currentQ.image;
+            imgEl.style.display = "block";
+            imgEl.alt = "Question image";
+        } else {
+            imgEl.style.display = "none";
+        }
+
+        // Show choices
         choicesEl.innerHTML = "";
 
-        currentQ.options.forEach(option => {
-            const btn = document.createElement("button");
-            btn.className = "choice-btn";
-            btn.textContent = option;
-            btn.addEventListener("click", () => checkAnswer(option));
-            choicesEl.appendChild(btn);
+        if(currentQ.type === "mc") {
+            currentQ.options.forEach(option => {
+                const btn = document.createElement("button");
+                btn.className = "choice-btn";
+                 // Alleen bij vraag 2 (index 2) links uitlijnen
+                if(current === 1) {
+                    btn.classList.add("choice-btn-left");
+                }
+                btn.innerHTML = option;
+                btn.addEventListener("click", () => checkAnswer(option, btn));
+                choicesEl.appendChild(btn);
+            });
+        } else if(currentQ.type === "text") {
+            const input = document.createElement("input");
+            input.type = "text";
+            input.placeholder = "Voer je antwoord in";
+            input.id = "textAnswer";
+
+            const submitBtn = document.createElement("button");
+            submitBtn.textContent = "Submit";
+            submitBtn.className = "choice-btn";
+            submitBtn.addEventListener("click", () => checkTextAnswer(input.value));
+
+            choicesEl.appendChild(input);
+            choicesEl.appendChild(submitBtn);
+        }
+        else if(currentQ.type === "image") {
+            currentQ.options.forEach(opt => {
+            const imgBtn = document.createElement("img");
+            imgBtn.src = opt.src;
+            imgBtn.alt = opt.alt;
+            imgBtn.style.cursor = "pointer";
+            imgBtn.style.border = "3px solid #d63447";
+            imgBtn.style.borderRadius = "10px";
+            imgBtn.style.margin = "10px";
+            imgBtn.addEventListener("click", () => {
+                if (opt.alt === currentQ.correct) {
+                    alert("Dat is correct!");
+                    current++;
+                    if (current < questions.length) {
+                        showQuestion();
+                    } else {
+                        showFinal();
+                    }
+            } else {
+              alert("Helaas! Probeer het opnieuw!");
+            }
+
+            });
+            choicesEl.appendChild(imgBtn);
         });
+        }
+
+        if (currentQ.showScaryPopup) {
+            showScaryPopup();
+
+    }}
+
+    function checkAnswer(selected, btn) {
+        if(selected === questions[current].correct) {
+            alert("Dat is correct!");
+            btn.style.background = "#2e7d32";
+            btn.style.transform = "scale(1.1)";
+            
+            setTimeout(() => {
+                current++;
+                if(current < questions.length) {
+                    showQuestion();
+                } 
+                else {
+                    showFinal();
+                }}, 500);
+        } else {
+            btn.style.background = "#f57c00";
+            setTimeout(() => btn.style.background = "#d63447", 500);
+            alert("Helaas! Probeer het opnieuw!");
+        }
     }
 
-    function checkAnswer(selected) {
-        if(selected === questions[current].correct) {
-            current++;
+    function checkTextAnswer(answer) {
+        const currentQ = questions[current];  // Make sure we reference the current question
+
+        if(currentQ.correct === "ANY" || answer.trim().toLowerCase() === currentQ.correct.toLowerCase()) {
+            alert("Dat is correct!");
+
+        current++;
             if(current < questions.length) {
                 showQuestion();
             } else {
                 showFinal();
             }
         } else {
-            alert("Oops! Try again.");
+            alert("Helaas! Probeer het opnieuw!");
         }
     }
 
@@ -159,7 +359,11 @@
         document.querySelector(".question-container").style.display = "none";
         finalEl.style.display = "block";
     }
-</script>
 
+
+
+
+</script>
+    
 </body>
 </html>
