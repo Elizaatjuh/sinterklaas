@@ -121,11 +121,11 @@
     <!-- Final Puzzle -->
     <div class="final" id="final" style="display:none;">
         🎁 Lieve Erik, 🎁<br>
-        Je hebt bijna bewezen dat jij de echte Erik bent,
-        Nu volgt de laatste test voor deze vent
-        Je vindt de locatie van je cadeau tussen je onderdelenboeken
+        Je hebt bijna bewezen dat jij de echte Erik bent,<br>
+        Nu volgt de laatste test voor deze vent<br>
+        Je vindt de locatie van je cadeau tussen je onderdelenboeken<br>
         Met deze foto weet je vast wel waar je moet zoeken
-        <img id="sint&piet_schrikken.png" src="sint&piet_schrikken.png" alt="Question Image">
+        <img id="locatie.jpg" src="locatie.jpg" alt="Question Image">
     </div>
 
 </div>
@@ -167,12 +167,12 @@
             correct: "96-MR-TH"
         },
         {   type: "mc",
-            q: "6: Familie Hobo heeft een mooi jaar achter de rug, Heb je wel opgelet bij de Downton Abbey film? Wie nam de keuken overvan Mrs. Patmore?",
+            q: "6: met de meiden kijk je flikken en het perfecte plaatje<br>Tot midden in de nacht, tot het gaatje,<br>Ook in de bioscoop was de Hobo heuvel te vinden<br>Om de vierde Downton Abbey film te verslinden. <br>Maar heb je alle verhaallijnen wel goed door?<br>Wie nam de keuken over van Mrs. Patmore?<br>",
             options: 
-            ["Daisy", 
-                "Mrs Crawley", 
-                "V", 
-                "A"],
+            ["Mrs Crawley", 
+                "Daisy", 
+                "Anna", 
+                "Mrs Highclere"],
             correct: "Daisy",
 
         }
@@ -304,7 +304,7 @@ function showScaryPopupStart() {
                         showFinal();
                     }
             } else {
-              alert("Helaas! Probeer het opnieuw!");
+              alert("Dat antwoord is niet goed. Ik vrees dat het opnieuw moet!");
             }
 
             });
@@ -319,7 +319,7 @@ function showScaryPopupStart() {
 
     function checkAnswer(selected, btn) {
         if(selected === questions[current].correct) {
-            alert("Dat is correct!");
+            alert("Het antwoord op deze vraag heb je goed! Jij weet wel hoe dit moet.");
             btn.style.background = "#2e7d32";
             btn.style.transform = "scale(1.1)";
             
@@ -334,7 +334,7 @@ function showScaryPopupStart() {
         } else {
             btn.style.background = "#f57c00";
             setTimeout(() => btn.style.background = "#d63447", 500);
-            alert("Helaas! Probeer het opnieuw!");
+            alert("Dat antwoord is niet goed. Ik vrees dat het opnieuw moet!");
         }
     }
 
@@ -351,7 +351,7 @@ function showScaryPopupStart() {
                 showFinal();
             }
         } else {
-            alert("Helaas! Probeer het opnieuw!");
+            alert("Dat antwoord is niet goed. Ik vrees dat het opnieuw moet!");
         }
     }
 
